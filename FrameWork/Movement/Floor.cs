@@ -10,5 +10,9 @@ namespace FrameWork.Movement
     public class Floor:IMovement
     {
         public void move(PictureBox p, List<GameObject> gameobjects) { }
+        public void scroll(PictureBox pb)
+        {
+            pb.Top += 10;
+        }
     }
 }

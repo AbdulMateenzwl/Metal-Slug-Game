@@ -35,6 +35,13 @@ namespace FrameWork.GameF
                 gameobjects[i].move(gameobjects);
             }
         }
+        public void scroll()
+        {
+            for (int i = 0; i < gameobjects.Count; i++)
+            {
+                gameobjects[i].scroll();
+            }
+        }
         public void RaisePlayerDieEvent(PictureBox playergameobject)
         {
             onPlayerDie?.Invoke(playergameobject, EventArgs.Empty);

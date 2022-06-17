@@ -39,5 +39,9 @@ namespace FrameWork.Movement
                 location.X += speed;
             }*/
         }
+        public void scroll(PictureBox pb)
+        {
+
+        }
     }
 }

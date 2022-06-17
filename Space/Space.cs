@@ -57,5 +57,10 @@ namespace Space
         {
             this.Controls.Remove(sender as PictureBox);
         }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            //g.scroll();
+        }
     }
 }

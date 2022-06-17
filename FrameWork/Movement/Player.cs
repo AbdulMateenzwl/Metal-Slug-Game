@@ -31,6 +31,10 @@ namespace FrameWork.Movement
             G = g;
             this.jumpSteps = jumpSteps;
         }
+        public void scroll(PictureBox pb)
+        {
+            //pb.Top += 10;
+        }
 
         public void move(PictureBox pb, List<GameObject> gameobjects)
         {
@@ -49,9 +53,12 @@ namespace FrameWork.Movement
             }
             if(Keyboard.IsKeyPressed(Key.DownArrow))
             {
-
+                if(!stairs_bound(pb,gameobjects))
+                {
+                    gravity(pb, gameobjects);
+                }
             }
-            if (check_under(pb, gameobjects))
+            if (check_under(pb, gameobjects) || !stairs_bound(pb,gameobjects))
             {
                 if (Keyboard.IsKeyPressed(Key.Space))
                 {
@@ -80,11 +87,15 @@ namespace FrameWork.Movement
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (pb.Bounds.IntersectsWith(list[i].Pb.Bounds) && list[i].Otype==ENUM.ObjectTypes.stairs)
+                if (pb.Bounds.IntersectsWith(list[i].Pb.Bounds) && list[i].Otype == ENUM.ObjectTypes.stairs && list[i].Pb.Left<=pb.Left && list[i].Pb.Right >= pb.Right)
                 {
                     return false;
                 }
             }
+            return true;
+        }
+        public bool inside_stairs(PictureBox pb, List<GameObject> list)
+        {
             return true;
         }
         protected bool check_hurdles_left(PictureBox pb, List<GameObject> list)
@@ -285,7 +296,7 @@ namespace FrameWork.Movement
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && location(pb, list[i].Pb) &&( list[i].Otype == ENUM.ObjectTypes.floor || list[i].Otype==ENUM.ObjectTypes.stairs))
+                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && location(pb, list[i].Pb) &&( list[i].Otype == ENUM.ObjectTypes.floor ))
                 {
                     return true;
                 }

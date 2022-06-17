@@ -10,7 +10,10 @@ namespace FrameWork.Movement
     public class stairs:IMovement
     {
         public void move(PictureBox pb, List<GameObject> gameobjects) { }
-        
+        public void scroll(PictureBox pb)
+        {
+            pb.Top += 10;
+        }
 
     }
 }

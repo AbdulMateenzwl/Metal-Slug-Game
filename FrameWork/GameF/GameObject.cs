@@ -36,6 +36,9 @@ namespace FrameWork.GameF
         {
              Movement.move(this.pb,gameobjects);
         }
-        
+        public void scroll()
+        {
+            Movement.scroll(this.pb);
+        }
     }
 }
