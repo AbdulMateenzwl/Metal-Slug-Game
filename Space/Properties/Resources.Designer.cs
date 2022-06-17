@@ -83,6 +83,16 @@ namespace Space.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap floor1 {
+            get {
+                object obj = ResourceManager.GetObject("floor1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap images {
             get {
                 object obj = ResourceManager.GetObject("images", resourceCulture);
@@ -96,6 +106,16 @@ namespace Space.Properties {
         internal static System.Drawing.Bitmap playerShip3_red {
             get {
                 object obj = ResourceManager.GetObject("playerShip3_red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stairs {
+            get {
+                object obj = ResourceManager.GetObject("stairs", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

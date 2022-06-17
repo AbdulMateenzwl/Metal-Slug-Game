@@ -10,6 +10,7 @@ namespace FrameWork.ENUM
     {
         player,
         floor,
+        stairs,
         playerfire,
         enemyfire,
         otherobjects

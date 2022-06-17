@@ -9,7 +9,7 @@ using EZInput;
 using FrameWork.GameF;
 namespace FrameWork.Movement
 {
-    public class Player:IMovement
+    public class Player : IMovement
     {
         private System.Drawing.Point boundary;
         bool direction = false;
@@ -24,7 +24,7 @@ namespace FrameWork.Movement
         int walking_speed;
         int G;
         private int jumpSteps;
-        public Player( System.Drawing.Point boundary, int walking_speed, int g, int jumpSteps)
+        public Player(System.Drawing.Point boundary, int walking_speed, int g, int jumpSteps)
         {
             this.boundary = boundary;
             this.walking_speed = walking_speed;
@@ -35,55 +35,74 @@ namespace FrameWork.Movement
         public void move(PictureBox pb, List<GameObject> gameobjects)
         {
             key_pressed = false;
-            if(Keyboard.IsKeyPressed(Key.RightArrow))
+            if (Keyboard.IsKeyPressed(Key.RightArrow))
             {
-                moveright(pb,gameobjects);
+                moveright(pb, gameobjects);
                 updatepic_right(pb);
                 key_pressed = true;
             }
             if (Keyboard.IsKeyPressed(Key.LeftArrow))
             {
-                moveleft(pb,gameobjects);
+                moveleft(pb, gameobjects);
                 updatepic_left(pb);
                 key_pressed = true;
             }
-            if(check_under(pb,gameobjects))
+            if(Keyboard.IsKeyPressed(Key.DownArrow))
+            {
+
+            }
+            if (check_under(pb, gameobjects))
             {
                 if (Keyboard.IsKeyPressed(Key.Space))
                 {
                     jump = true;
                 }
             }
-            if(jump)
+            if (jump)
             {
                 Jump(pb);
                 key_pressed = true;
+
             }
-            if(!jump)
+            if (!jump)
             {
-                gravity(pb,gameobjects);
+                if (stairs_bound(pb,gameobjects))
+                {
+                    gravity(pb, gameobjects);
+                }
             }
-            if(!key_pressed)
+            if (!key_pressed)
             {
                 is_standing(pb);
             }
         }
-        protected bool check_hurdles_left(PictureBox pb, List<GameObject> list)
+        public bool stairs_bound(PictureBox pb, List<GameObject> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds)&& list[i].Otype == ENUM.ObjectTypes.floor && chkleft(pb, list[i].Pb))
+                if (pb.Bounds.IntersectsWith(list[i].Pb.Bounds) && list[i].Otype==ENUM.ObjectTypes.stairs)
                 {
                     return false;
                 }
             }
             return true;
         }
-        protected bool check_hurdles_right(PictureBox pb,List<GameObject> list)
+        protected bool check_hurdles_left(PictureBox pb, List<GameObject> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && list[i].Otype==ENUM.ObjectTypes.floor && chkright(pb, list[i].Pb))
+                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && list[i].Otype == ENUM.ObjectTypes.floor && chkleft(pb, list[i].Pb))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        protected bool check_hurdles_right(PictureBox pb, List<GameObject> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && list[i].Otype == ENUM.ObjectTypes.floor && chkright(pb, list[i].Pb))
                 {
                     return false;
                 }
@@ -91,9 +110,9 @@ namespace FrameWork.Movement
             return true;
 
         }
-        public bool chkright(PictureBox player,PictureBox floor)
+        public bool chkright(PictureBox player, PictureBox floor)
         {
-            if(player.Top < floor.Top && player.Bottom >floor.Bottom&&player.Left<floor.Left)
+            if (player.Top < floor.Top && player.Bottom > floor.Bottom && player.Left < floor.Left)
             {
                 return true;
             }
@@ -109,8 +128,7 @@ namespace FrameWork.Movement
         }
         public void moveright(PictureBox pb, List<GameObject> gameobjects)
         {
-            //if (check_borders_right(pb, width) && check_hurdles_right(list))
-            if(pb.Right<boundary.X && check_hurdles_right(pb,gameobjects))
+            if (pb.Right < boundary.X)
             {
                 direction = true;
                 pb.Left += walking_speed;
@@ -123,7 +141,7 @@ namespace FrameWork.Movement
         }
         public void moveleft(PictureBox pb, List<GameObject> gameobjects)
         {
-            if (pb.Left  > 0 && check_hurdles_left(pb,gameobjects))
+            if (pb.Left > 0)
             {
                 direction = false;
                 pb.Left -= walking_speed;
@@ -258,16 +276,16 @@ namespace FrameWork.Movement
         }
         public void gravity(PictureBox pb, List<GameObject> gameobjects)
         {
-            if (!check_under(pb,gameobjects))
+            if (!check_under(pb, gameobjects))
             {
                 pb.Top += G;
             }
         }
-        public bool check_under(PictureBox pb , List<GameObject> list)
+        public bool check_under(PictureBox pb, List<GameObject> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && !location(pb, list[i].Pb) && list[i].Otype==ENUM.ObjectTypes.floor)
+                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && location(pb, list[i].Pb) &&( list[i].Otype == ENUM.ObjectTypes.floor || list[i].Otype==ENUM.ObjectTypes.stairs))
                 {
                     return true;
                 }
@@ -276,11 +294,11 @@ namespace FrameWork.Movement
         }
         public bool location(PictureBox obj, PictureBox surface)
         {
-            if (!bound_right(obj, surface) && !bound_left(obj, surface) && !bound_down(obj, surface))
+            if (!bound_right(obj, surface) && !bound_left(obj, surface) && obj.Bottom >= surface.Top)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
         public bool bound_left(PictureBox obj, PictureBox surface)
         {

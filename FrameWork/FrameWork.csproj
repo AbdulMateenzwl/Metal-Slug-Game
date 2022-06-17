@@ -58,6 +58,7 @@
     <Compile Include="Movement\IMovement.cs" />
     <Compile Include="Movement\Floor.cs" />
     <Compile Include="Movement\Player.cs" />
+    <Compile Include="Movement\stairs.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,6 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\RS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images-removebg-preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\floor1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

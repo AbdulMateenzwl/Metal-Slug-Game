@@ -31,13 +31,12 @@ namespace Space
             System.Drawing.Point boundary = new System.Drawing.Point(this.Width,this. Height);
 
 
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, Resources.ufoGreen.Width, Resources.ufoGreen.Height, new Player(boundary,10,10,20));
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height-100, 0, Width, Resources.ufoGreen.Height, new Floor());
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height-250, 0, 300, 30, new Floor());
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height-150, 0, 700, 30, new Floor());
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height - 150, Width-300, 300, 30, new Floor());
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height - 250, Width-600, 300, 30, new Floor());
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.floor, Height - 350, Width-300, 300, 30, new Floor());
+            g.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 70, 70, new Player(boundary,10,10,20));
+            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor());
+            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-250, 0, Width-100, 10, new Floor());
+            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-450, 100, Width-100, 10, new Floor());
+            g.AddGameObject(Resources.stairs,ObjectTypes.stairs, Height-450, 0, 100, 200, new stairs());
+
 
             //CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.floor, new PlayerCollision());
             //g.addCollision(c);
