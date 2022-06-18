@@ -13,7 +13,7 @@ namespace FrameWork.Movement
     {
         private System.Drawing.Point boundary;
         bool direction = false;
-        public EventHandler onAdd;
+        public static EventHandler onAdd;
         public EventHandler onDelete;
         int r_count = 0;
         int l_count = 0;
@@ -21,6 +21,7 @@ namespace FrameWork.Movement
         bool jump = false;
         private int jump_count = 0;
         int walking_speed;
+        ProgressBar pbar = new ProgressBar();
         int G;
         private int jumpSteps;
         public Player(System.Drawing.Point boundary, int walking_speed, int g, int jumpSteps)
@@ -29,7 +30,9 @@ namespace FrameWork.Movement
             this.walking_speed = walking_speed;
             G = g;
             this.jumpSteps = jumpSteps;
+            
         }
+
         public void scroll(PictureBox pb) { }
         public bool getDirection() { return direction; }
         public void move(PictureBox pb, List<GameObject> gameobjects)
@@ -56,7 +59,6 @@ namespace FrameWork.Movement
             }
             if (check_under(pb, gameobjects) || !stairs_bound(pb, gameobjects))
             {
-
                 if (Keyboard.IsKeyPressed(Key.Space))
                 {
                     jump = true;
@@ -92,25 +94,6 @@ namespace FrameWork.Movement
             }
             return true;
         }
-        /*public void fire(PictureBox pb)
-        {
-            if (Keyboard.IsKeyPressed(Key.W))
-            {
-                if (fire_count == 0)
-                {
-                    if (direction)
-                    {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.fireright, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 10, 10, new Bullet(direction, 20)); ;
-                    }
-                    else
-                    {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.fireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 10, 10, new Bullet(direction, 20)); ;
-                    }
-                }
-                fire_ = true;
-            }
-
-        }*/
         public bool inside_stairs(PictureBox pb, List<GameObject> list)
         {
             return true;

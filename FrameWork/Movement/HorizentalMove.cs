@@ -22,6 +22,7 @@ namespace FrameWork.Movement
         }
         public bool getDirection() { return false; }
 
+
         public void move(PictureBox pb, List<GameObject> gameobjects)
         {
            /* if((pb.Right)>=0)

@@ -11,5 +11,6 @@ namespace FrameWork.GameF
         void RaisePlayerDieEvent(PictureBox pictureBox);
         void RaiseEnemyDieEvent(PictureBox pictureBox);
         void RaisePlayerBullet(PictureBox pictureBox);
+        void Raise(PictureBox pictureBox);
     }
 }

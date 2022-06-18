@@ -67,6 +67,12 @@
     <Compile Include="Movement\Floor.cs" />
     <Compile Include="Movement\Player.cs" />
     <Compile Include="Movement\stairs.cs" />
+    <Compile Include="custom\CustomProgressBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProgressB\IProgressBar.cs" />
+    <Compile Include="ProgressB\NoProgressBar.cs" />
+    <Compile Include="ProgressB\ProgressBarClass.cs" />
     <Compile Include="Properties\Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -225,5 +231,6 @@
   <ItemGroup>
     <None Include="Resources\playerfireright1.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

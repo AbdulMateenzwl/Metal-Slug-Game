@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using FrameWork.ENUM;
+using FrameWork.ProgressB;
 using FrameWork.Movement;
 namespace FrameWork.GameF
 {
@@ -15,8 +16,9 @@ namespace FrameWork.GameF
         private IMovement movement;
         private ObjectTypes otype;
         private Ifire ifire;
+        private IProgressBar progressBar;
 
-        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m,Ifire ifire)
+        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m,Ifire ifire,IProgressBar ibar)
         {
             pb = new PictureBox();
             pb.Image = img;
@@ -29,6 +31,7 @@ namespace FrameWork.GameF
             this.Otype = otype;
             this.Movement = m;
             this.ifire = ifire;
+            progressBar = ibar;
         }
         public IMovement Movement { get => movement; set => movement = value; }
         public PictureBox Pb { get => pb; set => pb = value; }
@@ -45,6 +48,10 @@ namespace FrameWork.GameF
         public void fire(PictureBox pb)
         {
             ifire.fire(pb,movement.getDirection());
+        }
+        public void updateprogressbar()
+        {
+            progressBar.updateProgressBar(Pb);
         }
 
     }

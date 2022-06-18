@@ -24,8 +24,8 @@ namespace FrameWork.Collision
                 enemy = source2;
                 bullet = source1;
             }
-            game.RaiseEnemyDieEvent(enemy.Pb);
-            game.RaisePlayerBullet(bullet.Pb);
+           // game.RaiseEnemyDieEvent(enemy.Pb);
+            game.Raise(bullet.Pb);
         }
 
     }

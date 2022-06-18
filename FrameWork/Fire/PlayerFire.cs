@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrameWork.GameF;
 using FrameWork.Movement;
+using FrameWork.ProgressB;
 using System.Windows.Forms;
 using EZInput;
 namespace FrameWork.Fire
@@ -28,11 +29,11 @@ namespace FrameWork.Fire
                 {
                     if (direction)
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireright1, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 15, 15, new Bullet(true, 20, boundary), new NoFire());
+                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireright1, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 15, 15, new Bullet(true, 20, boundary), new NoFire(),new NoProgressBar());
                     }
                     else
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 15, 15, new Bullet(false, 20, boundary), new NoFire());
+                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 15, 15, new Bullet(false, 20, boundary), new NoFire(),new NoProgressBar());
                     }
                 }
             }

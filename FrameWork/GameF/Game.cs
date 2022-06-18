@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrameWork.Movement;
 using FrameWork.ENUM;
+using FrameWork.ProgressB;
 using FrameWork.Collision;
 namespace FrameWork.GameF
 {
@@ -21,14 +22,16 @@ namespace FrameWork.GameF
         public event EventHandler onPlayerDie;
         public event EventHandler onEnemyDie;
         public event EventHandler onPlayerBullet;
+        public static event EventHandler ondecrement;
         public Game()
         {
             Gameobjects = new List<GameObject>();
             collisions = new List<CollisionClass>();
+
         }
-        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire)
+        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire,IProgressBar ibar)
         {
-            GameObject ob = new GameObject(img,otype,top,left,width,height,movement,ifire);
+            GameObject ob = new GameObject(img,otype,top,left,width,height,movement,ifire,ibar);
             Gameobjects.Add(ob);
             onGameObjectAdded?.Invoke(ob.Pb, EventArgs.Empty);
         }
@@ -36,6 +39,7 @@ namespace FrameWork.GameF
         {
             detectCollision();
             fire();
+            update_progressbar();
             for (int i = 0; i < Gameobjects.Count; i++)
             {
                 Gameobjects[i].move(Gameobjects);
@@ -55,9 +59,20 @@ namespace FrameWork.GameF
                 Gameobjects[i].fire(Gameobjects[i].Pb);
             }
         }
+        public void update_progressbar()
+        {
+            for (int i = 0; i < Gameobjects.Count; i++)
+            {
+                Gameobjects[i].updateprogressbar();
+            }
+        }
         public void RaisePlayerDieEvent(PictureBox playergameobject)
         {
             onPlayerDie?.Invoke(playergameobject, EventArgs.Empty);
+        }
+        public void Raise(PictureBox playergameobject)
+        {
+            ondecrement?.Invoke(playergameobject, EventArgs.Empty);
         }
         public void RaiseEnemyDieEvent(PictureBox playergameobject)
         {
@@ -80,7 +95,6 @@ namespace FrameWork.GameF
                             if (Gameobjects[i].Otype == c.G1&& Gameobjects[m].Otype==c.G2)
                             {
                                 c.Behavior.performAction(this, Gameobjects[i], Gameobjects[m]);
-                                Gameobjects.RemoveAt(i);
                             }
                         }
                     }

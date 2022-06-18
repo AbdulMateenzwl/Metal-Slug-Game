@@ -19,6 +19,7 @@ namespace FrameWork.Movement
             this.speed = speed;
             this.boundary = boundary;
         }
+        
         public void move(PictureBox pb, List<GameF.GameObject> list)
         {
             if (direcrion)
