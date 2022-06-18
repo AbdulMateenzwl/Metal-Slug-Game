@@ -52,10 +52,15 @@
     <Compile Include="Collision\ICollisionAction.cs" />
     <Compile Include="Collision\PlayerCollision.cs" />
     <Compile Include="ENUM\ObjectTypes.cs" />
+    <Compile Include="Fire\EnemyFire.cs" />
+    <Compile Include="Fire\PlayerFire.cs" />
+    <Compile Include="Fire\NoFire.cs" />
     <Compile Include="GameF\Game.cs" />
     <Compile Include="GameF\GameObject.cs" />
     <Compile Include="GameF\IGame.cs" />
+    <Compile Include="Fire\Ifire.cs" />
     <Compile Include="Movement\Bullet.cs" />
+    <Compile Include="Movement\Enemy.cs" />
     <Compile Include="Movement\HorizentalMove.cs" />
     <Compile Include="Movement\IMovement.cs" />
     <Compile Include="Movement\Floor.cs" />
@@ -171,5 +176,42 @@
   <ItemGroup>
     <None Include="Resources\floor1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1le.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2e.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1e.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,12 +17,9 @@ namespace FrameWork.Movement
         public EventHandler onDelete;
         int r_count = 0;
         int l_count = 0;
-        int fire_count = 0;
         bool key_pressed = false;
         bool jump = false;
-        bool fire_;
         private int jump_count = 0;
-
         int walking_speed;
         int G;
         private int jumpSteps;
@@ -33,13 +30,10 @@ namespace FrameWork.Movement
             G = g;
             this.jumpSteps = jumpSteps;
         }
-        public void scroll(PictureBox pb)
-        {
-        }
-
+        public void scroll(PictureBox pb) { }
+        public bool getDirection() { return direction; }
         public void move(PictureBox pb, List<GameObject> gameobjects)
         {
-            fire_ = false;
             key_pressed = false;
             if (Keyboard.IsKeyPressed(Key.RightArrow))
             {
@@ -60,14 +54,6 @@ namespace FrameWork.Movement
                     gravity(pb, gameobjects);
                 }
             }
-            if (Keyboard.IsKeyPressed(Key.W))
-            {
-                if (fire_count==0)
-                {
-                    fire(pb);
-                }
-                fire_ = true;
-            }
             if (check_under(pb, gameobjects) || !stairs_bound(pb, gameobjects))
             {
 
@@ -80,7 +66,6 @@ namespace FrameWork.Movement
             {
                 Jump(pb);
                 key_pressed = true;
-
             }
             if (!jump)
             {
@@ -93,15 +78,7 @@ namespace FrameWork.Movement
             {
                 is_standing(pb);
             }
-            fire_count++;
-            if (!fire_)
-            {
-                fire_count = 0;
-            }
-            if (fire_count == 5)
-            {
-                fire_count = 0;
-            }
+            
 
         }
         public bool stairs_bound(PictureBox pb, List<GameObject> list)
@@ -115,17 +92,25 @@ namespace FrameWork.Movement
             }
             return true;
         }
-        public void fire(PictureBox pb)
+        /*public void fire(PictureBox pb)
         {
-            if (direction)
+            if (Keyboard.IsKeyPressed(Key.W))
             {
-                Game.AddGameObject(FrameWork.Properties.Resource1.fireright, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 10, 10, new Bullet(direction, 20)); ;
+                if (fire_count == 0)
+                {
+                    if (direction)
+                    {
+                        Game.AddGameObject(FrameWork.Properties.Resource1.fireright, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 10, 10, new Bullet(direction, 20)); ;
+                    }
+                    else
+                    {
+                        Game.AddGameObject(FrameWork.Properties.Resource1.fireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 10, 10, new Bullet(direction, 20)); ;
+                    }
+                }
+                fire_ = true;
             }
-            else
-            {
-                Game.AddGameObject(FrameWork.Properties.Resource1.fireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 10, 10, new Bullet(direction, 20)); ;
-            }
-        }
+
+        }*/
         public bool inside_stairs(PictureBox pb, List<GameObject> list)
         {
             return true;
@@ -354,14 +339,6 @@ namespace FrameWork.Movement
         public bool bound_right(PictureBox obj, PictureBox surface)
         {
             if (obj.Right < surface.Left)
-            {
-                return true;
-            }
-            return false;
-        }
-        public bool bound_down(PictureBox obj, PictureBox surface)
-        {
-            if (obj.Bottom < surface.Top)
             {
                 return true;
             }

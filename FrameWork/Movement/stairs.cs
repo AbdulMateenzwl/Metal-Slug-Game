@@ -14,6 +14,6 @@ namespace FrameWork.Movement
         {
             pb.Top += 10;
         }
-
+        public bool getDirection() { return false; }
     }
 }

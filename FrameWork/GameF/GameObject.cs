@@ -14,8 +14,9 @@ namespace FrameWork.GameF
         private PictureBox pb;
         private IMovement movement;
         private ObjectTypes otype;
+        private Ifire ifire;
 
-        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m)
+        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m,Ifire ifire)
         {
             pb = new PictureBox();
             pb.Image = img;
@@ -27,6 +28,7 @@ namespace FrameWork.GameF
             pb.BackColor = Color.Transparent;
             this.Otype = otype;
             this.Movement = m;
+            this.ifire = ifire;
         }
         public IMovement Movement { get => movement; set => movement = value; }
         public PictureBox Pb { get => pb; set => pb = value; }
@@ -40,5 +42,10 @@ namespace FrameWork.GameF
         {
             Movement.scroll(this.pb);
         }
+        public void fire(PictureBox pb)
+        {
+            ifire.fire(pb,movement.getDirection());
+        }
+
     }
 }

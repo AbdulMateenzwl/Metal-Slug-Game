@@ -13,6 +13,6 @@ namespace FrameWork.Movement
     {
         void move(PictureBox pb, List<GameObject> gameobjects);
         void scroll(PictureBox p);
-
+        bool getDirection();
     }
 }

@@ -26,19 +26,16 @@ namespace FrameWork.GameF
             Gameobjects = new List<GameObject>();
             collisions = new List<CollisionClass>();
         }
-        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement)
+        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire)
         {
-            GameObject ob = new GameObject(img,otype,top,left,width,height,movement);
+            GameObject ob = new GameObject(img,otype,top,left,width,height,movement,ifire);
             Gameobjects.Add(ob);
             onGameObjectAdded?.Invoke(ob.Pb, EventArgs.Empty);
         }
-        /*public static void AddgameObject(Image img, ObjectTypes otype, int top, int left, int width, int height, IMovement movement)
-        {
-            AddgameObject(img,otype,top,left,width,height,movement);
-        }*/
         public void update()
         {
             detectCollision();
+            fire();
             for (int i = 0; i < Gameobjects.Count; i++)
             {
                 Gameobjects[i].move(Gameobjects);
@@ -49,6 +46,13 @@ namespace FrameWork.GameF
             for (int i = 0; i < Gameobjects.Count; i++)
             {
                 Gameobjects[i].scroll();
+            }
+        }
+        public void fire()
+        {
+            for (int i = 0; i < Gameobjects.Count; i++)
+            {
+                Gameobjects[i].fire(Gameobjects[i].Pb);
             }
         }
         public void RaisePlayerDieEvent(PictureBox playergameobject)

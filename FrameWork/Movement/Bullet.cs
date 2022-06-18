@@ -15,7 +15,6 @@ namespace FrameWork.Movement
             this.direcrion = direction;
             this.speed = speed;
         }
-
         public void move(PictureBox pb, List<GameF.GameObject> list)
         {
             if(direcrion)
@@ -31,5 +30,7 @@ namespace FrameWork.Movement
         {
             pb.Top += 10;
         }
+        public bool getDirection() { return false; }
+
     }
 }

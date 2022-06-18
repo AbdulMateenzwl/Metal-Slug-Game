@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FrameWork.GameF;
 using FrameWork.Movement;
 using FrameWork.ENUM;
+using FrameWork.Fire;
 using EZInput;
 using FrameWork.Collision;
 using Space.Properties;
@@ -33,12 +34,12 @@ namespace Space
             System.Drawing.Point boundary = new System.Drawing.Point(this.Width,this. Height);
 
 
-            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 50, 50, new Player(boundary,10,10,14));
-            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Floor());
-            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor());
-            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-200, 0, Width-100, 10, new Floor());
-            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-350, 100, Width-100, 10, new Floor());
-            Game.AddGameObject(Resources.stairs,ObjectTypes.stairs, Height-350, 0, 100, 150, new stairs());
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 50, 50, new Player(boundary,10,10,14),new PlayerFire());
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Enemy(boundary,7,10),new EnemyFire(10));
+            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor(),new NoFire());
+            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, Height - 200, 0, Width - 100, 10, new Floor(), new NoFire());
+            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, Height - 350, 100, Width - 100, 10, new Floor(), new NoFire());
+            Game.AddGameObject(Resources.stairs, ObjectTypes.stairs, Height - 350, 0, 100, 150, new stairs(), new NoFire());
 
             CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.enemy, new PlayerCollision());
             g.addCollision(c);
@@ -58,10 +59,6 @@ namespace Space
             this.Controls.Add(sender as PictureBox);
         }
         public void removePictureBox(object sender ,EventArgs e)
-        {
-            this.Controls.Remove(sender as PictureBox);
-        }
-        public void removeEnemy(object sender,EventArgs e)
         {
             this.Controls.Remove(sender as PictureBox);
         }
