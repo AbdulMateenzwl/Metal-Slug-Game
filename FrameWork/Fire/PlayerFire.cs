@@ -13,6 +13,11 @@ namespace FrameWork.Fire
     {
         int fire_count = 0;
         bool fire_ = false;
+        System.Drawing.Point boundary;
+        public PlayerFire(System.Drawing.Point point)
+        {
+            boundary = point;
+        }
         public void fire(PictureBox pb, bool direction)
         {
             fire_ = false;
@@ -23,11 +28,11 @@ namespace FrameWork.Fire
                 {
                     if (direction)
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.fireright, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 10, 10, new Bullet(true, 20), new NoFire());
+                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireright1, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 15, 15, new Bullet(true, 20, boundary), new NoFire());
                     }
                     else
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.fireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 10, 10, new Bullet(false, 20), new NoFire());
+                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 15, 15, new Bullet(false, 20, boundary), new NoFire());
                     }
                 }
             }

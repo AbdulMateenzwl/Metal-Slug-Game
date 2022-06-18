@@ -303,6 +303,26 @@ namespace FrameWork.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap enemyfireleft {
+            get {
+                object obj = ResourceManager.GetObject("enemyfireleft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap enemyfireright {
+            get {
+                object obj = ResourceManager.GetObject("enemyfireright", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fireleft {
             get {
                 object obj = ResourceManager.GetObject("fireleft", resourceCulture);
@@ -446,6 +466,26 @@ namespace FrameWork.Properties {
         internal static System.Drawing.Bitmap LS {
             get {
                 object obj = ResourceManager.GetObject("LS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playerfireleft {
+            get {
+                object obj = ResourceManager.GetObject("playerfireleft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playerfireright1 {
+            get {
+                object obj = ResourceManager.GetObject("playerfireright1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

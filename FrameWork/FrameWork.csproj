@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\2BulletCollision.cs" />
     <Compile Include="Collision\BulletCollision.cs" />
     <Compile Include="Collision\CollisionClass.cs" />
     <Compile Include="Collision\FloorCollision.cs" />
@@ -212,6 +213,17 @@
   <ItemGroup>
     <None Include="Resources\1e.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\enemyfireleft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enemyfireright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playerfireright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\playerfireright1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

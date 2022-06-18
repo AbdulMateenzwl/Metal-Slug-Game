@@ -17,13 +17,15 @@ namespace FrameWork.Movement
         int l_count = 0;
         int walking_speed;
         int G;
-        public Enemy(System.Drawing.Point boundary, int walking_speed, int g)
+        int direction_count = 0;
+        public Enemy(System.Drawing.Point boundary, int walking_speed, int g,int randomDirection)
         {
             this.boundary = boundary;
             this.walking_speed = walking_speed;
             G = g;
+            direction_count = randomDirection;
         }
-        public bool getDirection() { return false; }
+        public bool getDirection() { return direction; }
         public void scroll(PictureBox pb) { }
         public void gravity(PictureBox pb, List<GameObject> gameobjects)
         {
@@ -74,6 +76,7 @@ namespace FrameWork.Movement
             {
                 if (gameobjects[i].Pb.Bounds.IntersectsWith(pb.Bounds) && gameobjects[i].Otype==ENUM.ObjectTypes.floor)
                 {
+                    RandomDirection();
                     if (pb.Left-walking_speed < gameobjects[i].Pb.Left)
                     {
                         direction = true;
@@ -94,8 +97,6 @@ namespace FrameWork.Movement
                     }
                     else
                     {
-                        pb.Left -= walking_speed;
-                        direction = false;
                         pb.Left -= walking_speed;
                         l_count++;
                         if (l_count == 7)
@@ -161,6 +162,22 @@ namespace FrameWork.Movement
                 pb.Image = FrameWork.Properties.Resource1._6le;
             }
         }
-
+        public void RandomDirection()
+        {
+            direction_count++;
+            if(direction_count>50)
+            {
+                direction_count = 0;
+                Random random = new Random();
+                if (random.Next(0, 100) > 50)
+                {
+                    direction = true;
+                }
+                else
+                {
+                    direction = false;
+                }
+            }
+        }
     }
 }

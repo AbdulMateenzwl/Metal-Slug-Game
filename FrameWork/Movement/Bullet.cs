@@ -4,26 +4,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 namespace FrameWork.Movement
 {
     public class Bullet : IMovement
     {
         bool direcrion;
         int speed;
-        public Bullet(bool direction, int speed)
+        Point boundary;
+        public static event EventHandler onEnd;
+        public Bullet(bool direction, int speed, Point boundary)
         {
             this.direcrion = direction;
             this.speed = speed;
+            this.boundary = boundary;
         }
         public void move(PictureBox pb, List<GameF.GameObject> list)
         {
-            if(direcrion)
+            if (direcrion)
             {
-                pb.Left += speed;
+                if (pb.Right < boundary.X)
+                {
+                    pb.Left += speed;
+                }
+                else
+                {
+                    onEnd?.Invoke(pb, EventArgs.Empty);
+                }
             }
             else
             {
-                pb.Left -= speed;
+                if (pb.Left > 0)
+                {
+                    pb.Left -= speed;
+                }
+                else
+                {
+                    onEnd?.Invoke(pb, EventArgs.Empty);
+                }
             }
         }
         public void scroll(PictureBox pb)
