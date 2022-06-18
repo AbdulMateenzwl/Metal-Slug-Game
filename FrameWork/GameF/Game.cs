@@ -12,58 +12,80 @@ namespace FrameWork.GameF
 {
     public class Game:IGame
     {
-        private List<GameObject> gameobjects;
+        private static List<GameObject> gameobjects;
         private List<CollisionClass> collisions;
-        public event EventHandler onGameObjectAdded;
+
+        public static List<GameObject> Gameobjects { get => gameobjects; set => gameobjects = value; }
+
+        public static event EventHandler onGameObjectAdded;
         public event EventHandler onPlayerDie;
+        public event EventHandler onEnemyDie;
+        public event EventHandler onPlayerBullet;
         public Game()
         {
-            gameobjects = new List<GameObject>();
+            Gameobjects = new List<GameObject>();
             collisions = new List<CollisionClass>();
         }
-        public void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement)
+        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement)
         {
             GameObject ob = new GameObject(img,otype,top,left,width,height,movement);
-            gameobjects.Add(ob);
+            Gameobjects.Add(ob);
             onGameObjectAdded?.Invoke(ob.Pb, EventArgs.Empty);
         }
+        /*public static void AddgameObject(Image img, ObjectTypes otype, int top, int left, int width, int height, IMovement movement)
+        {
+            AddgameObject(img,otype,top,left,width,height,movement);
+        }*/
         public void update()
         {
             detectCollision();
-            for (int i = 0; i < gameobjects.Count; i++)
+            for (int i = 0; i < Gameobjects.Count; i++)
             {
-                gameobjects[i].move(gameobjects);
+                Gameobjects[i].move(Gameobjects);
             }
         }
         public void scroll()
         {
-            for (int i = 0; i < gameobjects.Count; i++)
+            for (int i = 0; i < Gameobjects.Count; i++)
             {
-                gameobjects[i].scroll();
+                Gameobjects[i].scroll();
             }
         }
         public void RaisePlayerDieEvent(PictureBox playergameobject)
         {
             onPlayerDie?.Invoke(playergameobject, EventArgs.Empty);
         }
+        public void RaiseEnemyDieEvent(PictureBox playergameobject)
+        {
+            onEnemyDie?.Invoke(playergameobject, EventArgs.Empty);
+        }
+        public void RaisePlayerBullet(PictureBox pictureBox)
+        {
+            onPlayerBullet?.Invoke(pictureBox, EventArgs.Empty);
+        }
         public void detectCollision()
         {
-            for (int i = 0; i < gameobjects.Count; i++)
+            for (int i = Gameobjects.Count-1; i >= 0; i--)
             {
-                for (int m = 0; m < gameobjects.Count; m++)
+                for (int m = Gameobjects.Count-1; m >=0; m--)
                 {
-                    if (gameobjects[i].Pb.Bounds.IntersectsWith(gameobjects[m].Pb.Bounds))
+                    if (Gameobjects[i].Pb.Bounds.IntersectsWith(Gameobjects[m].Pb.Bounds))
                     {
                         foreach(CollisionClass c in collisions)
                         {
-                            if (gameobjects[i].Otype == c.G1&& gameobjects[m].Otype==c.G2)
+                            if (Gameobjects[i].Otype == c.G1&& Gameobjects[m].Otype==c.G2)
                             {
-                                c.Behavior.performAction(this, gameobjects[i], gameobjects[m]);
+                                c.Behavior.performAction(this, Gameobjects[i], Gameobjects[m]);
+                                Gameobjects.RemoveAt(i);
                             }
                         }
                     }
                 }
             }
+        }
+        public void removefromlist(int x)
+        {
+            gameobjects.RemoveAt(x);
         }
         public void addCollision(CollisionClass c)
         {

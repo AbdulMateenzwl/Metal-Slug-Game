@@ -12,6 +12,7 @@ namespace FrameWork.ENUM
         floor,
         stairs,
         playerfire,
+        enemy,
         enemyfire,
         otherobjects
     }

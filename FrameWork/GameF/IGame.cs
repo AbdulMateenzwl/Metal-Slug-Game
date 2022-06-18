@@ -9,5 +9,7 @@ namespace FrameWork.GameF
     public interface IGame
     {
         void RaisePlayerDieEvent(PictureBox pictureBox);
+        void RaiseEnemyDieEvent(PictureBox pictureBox);
+        void RaisePlayerBullet(PictureBox pictureBox);
     }
 }

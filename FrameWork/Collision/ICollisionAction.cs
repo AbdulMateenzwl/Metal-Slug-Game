@@ -8,6 +8,6 @@ namespace FrameWork.Collision
 {
     public interface ICollisionAction
     {
-        void performAction(IGame igame, GameObject source1, GameObject source2);
+        void performAction(IGame game, GameObject source1, GameObject source2);
     }
 }

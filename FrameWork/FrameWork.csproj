@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision\BulletCollision.cs" />
     <Compile Include="Collision\CollisionClass.cs" />
     <Compile Include="Collision\FloorCollision.cs" />
     <Compile Include="Collision\ICollision.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="GameF\Game.cs" />
     <Compile Include="GameF\GameObject.cs" />
     <Compile Include="GameF\IGame.cs" />
+    <Compile Include="Movement\Bullet.cs" />
     <Compile Include="Movement\HorizentalMove.cs" />
     <Compile Include="Movement\IMovement.cs" />
     <Compile Include="Movement\Floor.cs" />

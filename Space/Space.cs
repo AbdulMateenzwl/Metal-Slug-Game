@@ -26,20 +26,24 @@ namespace Space
         private void Space_Load(object sender, EventArgs e)
         {
             g = new Game();
-            g.onGameObjectAdded += new EventHandler(Ongameobjectadded);
-            g.onPlayerDie += new EventHandler(removePlayer);
+            Game.onGameObjectAdded += new EventHandler(Ongameobjectadded);
+            g.onPlayerDie += new EventHandler(removePictureBox);
+            g.onEnemyDie += new EventHandler(removePictureBox);
+            g.onPlayerBullet += new EventHandler(removePictureBox);
             System.Drawing.Point boundary = new System.Drawing.Point(this.Width,this. Height);
 
 
-            g.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 70, 70, new Player(boundary,10,10,20));
-            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor());
-            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-250, 0, Width-100, 10, new Floor());
-            g.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-450, 100, Width-100, 10, new Floor());
-            g.AddGameObject(Resources.stairs,ObjectTypes.stairs, Height-450, 0, 100, 200, new stairs());
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 50, 50, new Player(boundary,10,10,14));
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Floor());
+            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor());
+            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-200, 0, Width-100, 10, new Floor());
+            Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-350, 100, Width-100, 10, new Floor());
+            Game.AddGameObject(Resources.stairs,ObjectTypes.stairs, Height-350, 0, 100, 150, new stairs());
 
-
-            //CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.floor, new PlayerCollision());
-            //g.addCollision(c);
+            CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.enemy, new PlayerCollision());
+            g.addCollision(c);
+            CollisionClass b = new CollisionClass(ObjectTypes.enemy, ObjectTypes.playerfire, new BulletCollision());
+            g.addCollision(b);
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -53,11 +57,14 @@ namespace Space
         {
             this.Controls.Add(sender as PictureBox);
         }
-        public void removePlayer(object sender ,EventArgs e)
+        public void removePictureBox(object sender ,EventArgs e)
         {
             this.Controls.Remove(sender as PictureBox);
         }
-
+        public void removeEnemy(object sender,EventArgs e)
+        {
+            this.Controls.Remove(sender as PictureBox);
+        }
         private void timer2_Tick(object sender, EventArgs e)
         {
             //g.scroll();

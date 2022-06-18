@@ -15,16 +15,16 @@ namespace FrameWork.GameF
         private IMovement movement;
         private ObjectTypes otype;
 
-        public GameObject(Image img,ObjectTypes otype ,int top ,int left,int Width,int Height,IMovement m)
+        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m)
         {
-            pb=new PictureBox();
-            pb.Image=img;
-            pb.Top=top;
-            pb.Left=left;
-            pb.Width=Width;
-            pb.Height=Height;
+            pb = new PictureBox();
+            pb.Image = img;
+            pb.Top = top;
+            pb.Left = left;
+            pb.Width = Width;
+            pb.Height = Height;
             pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pb.BackColor=Color.Transparent;
+            pb.BackColor = Color.Transparent;
             this.Otype = otype;
             this.Movement = m;
         }
@@ -34,7 +34,7 @@ namespace FrameWork.GameF
 
         public void move(List<GameObject> gameobjects)
         {
-             Movement.move(this.pb,gameobjects);
+            Movement.move(this.pb, gameobjects);
         }
         public void scroll()
         {
