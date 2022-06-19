@@ -40,11 +40,17 @@ namespace FrameWork.GameF
 
         public void move(List<GameObject> gameobjects)
         {
-            Movement.move(this.pb, gameobjects);
+           
+                Movement.move(this.pb, gameobjects);
+
+            
         }
         public void scroll()
         {
-            Movement.scroll(this.pb);
+            if (Otype != ObjectTypes.Mainfloor)
+            {
+                Movement.scroll(this.pb);
+            }
         }
         public void fire(PictureBox pb)
         {
@@ -58,5 +64,6 @@ namespace FrameWork.GameF
         {
             a.ProgressBar.DeleteProgressBar(a);
         }
+        
     }
 }

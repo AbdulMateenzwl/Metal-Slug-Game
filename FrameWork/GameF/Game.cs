@@ -13,10 +13,17 @@ namespace FrameWork.GameF
 {
     public class Game:IGame
     {
+        private static Point boundary;
         private static List<GameObject> gameobjects;
         private List<CollisionClass> collisions;
-
+        public Game(Point boundary)
+        {
+            this.Boundary=boundary;
+            Gameobjects = new List<GameObject>();
+            collisions = new List<CollisionClass>();
+        }
         public static List<GameObject> Gameobjects { get => gameobjects; set => gameobjects = value; }
+        public Point Boundary { get => boundary; set => boundary = value; }
 
         public static event EventHandler onGameObjectAdded;
         public static event EventHandler onPlayerHit;
@@ -24,12 +31,7 @@ namespace FrameWork.GameF
         public event EventHandler onPlayerBullet;
         public event EventHandler onEnd;
         //public static event EventHandler ondecrement;
-        public Game()
-        {
-            Gameobjects = new List<GameObject>();
-            collisions = new List<CollisionClass>();
-
-        }
+ 
         public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire,IProgressBar ibar)
         {
             GameObject ob = new GameObject(img,otype,top,left,width,height,movement,ifire,ibar);
@@ -105,6 +107,29 @@ namespace FrameWork.GameF
         public static void removeGameobject(GameObject a)
         {
             Gameobjects.Remove(a);
+        }
+        public static int get_lowest_floor()
+        { 
+            int low = 1200;
+            for (int i = 0; i < Gameobjects.Count; i++)
+            {
+                if (Gameobjects[i].Otype==ENUM.ObjectTypes.floor && Gameobjects[i].Pb.Top >= 0 && Gameobjects[i].Pb.Top < low)
+                {
+                    low = Gameobjects[i].Pb.Top;
+                }
+            }
+            return low;
+        }
+        public void RemoveUnwanted()
+        {
+            for (int i = Gameobjects.Count-1; i >=0; i--)
+            {
+                if (Gameobjects[i].Pb.Top>boundary.X)
+                {
+                    onPlayerBullet?.Invoke(Gameobjects[i], EventArgs.Empty);
+                    Gameobjects.RemoveAt(i);
+                }
+            }
         }
     }
 

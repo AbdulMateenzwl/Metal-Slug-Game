@@ -11,6 +11,5 @@ namespace FrameWork.GameF
         void RaisePlayerHitEvent(GameObject obj);
         void RaiseEnemyHitEvent(GameObject obj);
         void RaisePlayerBulletRemove(GameObject obj);
-        //void RaiseBulletRemove(GameObject obj);
     }
 }
