@@ -24,24 +24,24 @@ namespace FrameWork.Movement
         {
             if (direcrion)
             {
-                if (pb.Right < boundary.X)
+                if (pb.Left < boundary.X)
                 {
                     pb.Left += speed;
                 }
                 else
                 {
-                    onEnd?.Invoke(pb, EventArgs.Empty);
+                    onEnd?.Invoke(this, EventArgs.Empty);
                 }
             }
             else
             {
-                if (pb.Left > 0)
+                if (pb.Right > 0)
                 {
                     pb.Left -= speed;
                 }
                 else
                 {
-                    onEnd?.Invoke(pb, EventArgs.Empty);
+                    onEnd?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

@@ -27,6 +27,7 @@ namespace FrameWork.ProgressB
             pbar.Value = 100;
             this.decrement = decrement;
             onAdd?.Invoke(pbar, EventArgs.Empty);
+            Game.onPlayerHit += new EventHandler(raise);
             Game.onEnemyHit += new EventHandler(raise);
         }
         private void raise(object sender, EventArgs e)

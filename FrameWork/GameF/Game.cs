@@ -19,9 +19,10 @@ namespace FrameWork.GameF
         public static List<GameObject> Gameobjects { get => gameobjects; set => gameobjects = value; }
 
         public static event EventHandler onGameObjectAdded;
-        public event EventHandler onPlayerDie;
+        public static event EventHandler onPlayerHit;
         public static event EventHandler onEnemyHit;
         public event EventHandler onPlayerBullet;
+        public event EventHandler onEnd;
         //public static event EventHandler ondecrement;
         public Game()
         {
@@ -66,13 +67,9 @@ namespace FrameWork.GameF
                 Gameobjects[i].updateprogressbar();
             }
         }
-        public void RaisePlayerDieEvent(PictureBox playergameobject)
+        public void RaisePlayerHitEvent(GameObject obj)
         {
-            onPlayerDie?.Invoke(playergameobject, EventArgs.Empty);
-        }
-        public void Raise(GameObject obj)
-        {
-            // ?.Invoke(obj, EventArgs.Empty);
+            onPlayerHit?.Invoke(obj, EventArgs.Empty);
         }
         public void RaiseEnemyHitEvent(GameObject obj)
         {

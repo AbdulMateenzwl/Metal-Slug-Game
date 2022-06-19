@@ -24,7 +24,7 @@ namespace FrameWork.Collision
                 chr = source2;
                 bullet = source1;
             }
-            //game.Raise(chr);
+            game.RaisePlayerBulletRemove(bullet);
             game.RaiseEnemyHitEvent(chr);
         }
     }

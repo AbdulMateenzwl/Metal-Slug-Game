@@ -7,13 +7,13 @@ using FrameWork.GameF;
 using FrameWork.ENUM;
 namespace FrameWork.Collision
 {
-    internal class EnemyBulletCollision:ICollisionAction
+    public class EnemyBulletCollision:ICollisionAction
     {
         public void performAction(IGame game, GameObject source1, GameObject source2)
         {
             GameObject chr;
             GameObject bullet;
-            if (source1.Otype == ObjectTypes.enemy)
+            if (source1.Otype == ObjectTypes.player)
             {
                 chr = source1;
                 bullet = source2;
@@ -23,8 +23,8 @@ namespace FrameWork.Collision
                 chr = source2;
                 bullet = source1;
             }
-            game.Raise(chr);
             game.RaisePlayerBulletRemove(bullet);
+            game.RaisePlayerHitEvent(chr);
         }
     }
 }

@@ -29,19 +29,18 @@ namespace Space
         {
             g = new Game();
             Game.onGameObjectAdded += new EventHandler(Ongameobjectadded);
-            g.onPlayerDie += new EventHandler(removePictureBox);
             ProgressBarClass.onGamobjectRemove += new EventHandler(removeGamobject);
             ProgressBarClass.onAdd += new EventHandler(ONADDprogress);
             Player.onAdd += new EventHandler(ONADDprogress);
-            //g.onEnemyDie += new EventHandler(removePictureBox);
             g.onPlayerBullet += new EventHandler(removeGamobject);
-            Bullet.onEnd += new EventHandler(removeGamobject_);
+            Bullet.onEnd += new EventHandler(removePictureBox);
+            g.onEnd += new EventHandler(removeGamobject);
             System.Drawing.Point boundary = new System.Drawing.Point(this.Width,this. Height);
 
 
-            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 50, 50, new Player(boundary,10,10,14),new PlayerFire(boundary),new ProgressBarClass(3,Color.YellowGreen));
-            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Enemy(boundary,7,10,100),new EnemyFire(20,boundary),new ProgressBarClass(5,Color.Red));
-            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Enemy(boundary,7,10,100),new EnemyFire(20,boundary),new ProgressBarClass(5,Color.Red));
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.player, 200, 0, 50, 50, new Player(boundary,10,10,14),new PlayerFire(boundary),new ProgressBarClass(1,Color.YellowGreen));
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 300, 50, 50, new Enemy(boundary,7,10,100),new EnemyFire(20,boundary),new ProgressBarClass(1,Color.Red));
+            Game.AddGameObject(Resources.ufoGreen,ObjectTypes.enemy, Height-410, 700, 50, 50, new Enemy(boundary,7,10,100),new EnemyFire(20,boundary),new ProgressBarClass(1,Color.Red));
             Game.AddGameObject(Resources.floor1,ObjectTypes.floor, Height-50, 0, Width, Resources.ufoGreen.Height, new Floor(),new NoFire(),new NoProgressBar());
             /*Game.AddGameObject(Resources.floor1, ObjectTypes.floor, Height - 200, 0, Width - 100, 10, new Floor(), new NoFire());
             Game.AddGameObject(Resources.floor1, ObjectTypes.floor, Height - 350, 100, Width - 100, 10, new Floor(), new NoFire());
@@ -51,8 +50,8 @@ namespace Space
             g.addCollision(c);
             CollisionClass b = new CollisionClass(ObjectTypes.enemy, ObjectTypes.playerfire, new BulletCollision());
             g.addCollision(b);
-           /* CollisionClass a = new CollisionClass(ObjectTypes.player, ObjectTypes.enemyfire, new BulletCollision());
-            g.addCollision(a);*/
+            CollisionClass a = new CollisionClass(ObjectTypes.player, ObjectTypes.enemyfire, new EnemyBulletCollision());
+            g.addCollision(a);
         }
 
         private void removeGamobject(object sender, EventArgs e)
@@ -60,12 +59,6 @@ namespace Space
             GameObject a = (sender as GameObject);
             removeProgressbar(a.ProgressBar,EventArgs.Empty);
             removePictureBox(a.Pb,EventArgs.Empty);
-            Game.removeGameobject(a);
-        }
-        private void removeGamobject_(object sender, EventArgs e)
-        {
-            GameObject a = (sender as GameObject);
-            //removePictureBox(a.Pb, EventArgs.Empty);
             Game.removeGameobject(a);
         }
         private void removeProgressbar(object sender, EventArgs e)

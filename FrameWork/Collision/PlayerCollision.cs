@@ -21,7 +21,7 @@ namespace FrameWork.Collision
             {
                 player = source2;
             }
-            game.Raise(player);
+            game.RaisePlayerHitEvent(player);
         }
     }
 }
