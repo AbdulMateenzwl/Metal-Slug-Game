@@ -20,9 +20,9 @@ namespace FrameWork.GameF
 
         public static event EventHandler onGameObjectAdded;
         public event EventHandler onPlayerDie;
-        public event EventHandler onEnemyDie;
+        public static event EventHandler onEnemyHit;
         public event EventHandler onPlayerBullet;
-        public static event EventHandler ondecrement;
+        //public static event EventHandler ondecrement;
         public Game()
         {
             Gameobjects = new List<GameObject>();
@@ -70,17 +70,17 @@ namespace FrameWork.GameF
         {
             onPlayerDie?.Invoke(playergameobject, EventArgs.Empty);
         }
-        public void Raise(PictureBox playergameobject)
+        public void Raise(GameObject obj)
         {
-            ondecrement?.Invoke(playergameobject, EventArgs.Empty);
+            // ?.Invoke(obj, EventArgs.Empty);
         }
-        public void RaiseEnemyDieEvent(PictureBox playergameobject)
+        public void RaiseEnemyHitEvent(GameObject obj)
         {
-            onEnemyDie?.Invoke(playergameobject, EventArgs.Empty);
+            onEnemyHit?.Invoke(obj, EventArgs.Empty);
         }
-        public void RaisePlayerBullet(PictureBox pictureBox)
+        public void RaisePlayerBulletRemove(GameObject obj)
         {
-            onPlayerBullet?.Invoke(pictureBox, EventArgs.Empty);
+            onPlayerBullet?.Invoke(obj, EventArgs.Empty);
         }
         public void detectCollision()
         {
@@ -101,13 +101,13 @@ namespace FrameWork.GameF
                 }
             }
         }
-        public void removefromlist(int x)
-        {
-            gameobjects.RemoveAt(x);
-        }
         public void addCollision(CollisionClass c)
         {
             collisions.Add(c);
+        }
+        public static void removeGameobject(GameObject a)
+        {
+            Gameobjects.Remove(a);
         }
     }
 

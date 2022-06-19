@@ -8,25 +8,24 @@ using FrameWork.ENUM;
 
 namespace FrameWork.Collision
 {
-    public class PlayerBulletCollision:ICollisionAction
+    public class BulletCollision:ICollisionAction
     {
         public void performAction(IGame game, GameObject source1, GameObject source2)
         {
-            GameObject enemy;
+            GameObject chr;
             GameObject bullet;
             if (source1.Otype == ObjectTypes.enemy)
             {
-                enemy = source1;
+                chr = source1;
                 bullet = source2;
             }
             else
             {
-                enemy = source2;
+                chr = source2;
                 bullet = source1;
             }
-           // game.RaiseEnemyDieEvent(enemy.Pb);
-            game.Raise(bullet.Pb);
+            //game.Raise(chr);
+            game.RaiseEnemyHitEvent(chr);
         }
-
     }
 }

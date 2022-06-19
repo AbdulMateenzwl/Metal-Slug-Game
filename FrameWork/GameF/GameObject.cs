@@ -31,11 +31,12 @@ namespace FrameWork.GameF
             this.Otype = otype;
             this.Movement = m;
             this.ifire = ifire;
-            progressBar = ibar;
+            ProgressBar = ibar;
         }
         public IMovement Movement { get => movement; set => movement = value; }
         public PictureBox Pb { get => pb; set => pb = value; }
         public ObjectTypes Otype { get => otype; set => otype = value; }
+        public IProgressBar ProgressBar { get => progressBar; set => progressBar = value; }
 
         public void move(List<GameObject> gameobjects)
         {
@@ -51,8 +52,11 @@ namespace FrameWork.GameF
         }
         public void updateprogressbar()
         {
-            progressBar.updateProgressBar(Pb);
+            ProgressBar.updateProgressBar(Pb);
         }
-
+        public void DeleteProgressBar(GameObject a)
+        {
+            a.ProgressBar.DeleteProgressBar(a);
+        }
     }
 }

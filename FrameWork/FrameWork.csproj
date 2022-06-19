@@ -45,9 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collision\2BulletCollision.cs" />
     <Compile Include="Collision\BulletCollision.cs" />
     <Compile Include="Collision\CollisionClass.cs" />
+    <Compile Include="Collision\EnemyBulletCollision.cs" />
     <Compile Include="Collision\FloorCollision.cs" />
     <Compile Include="Collision\ICollision.cs" />
     <Compile Include="Collision\ICollisionAction.cs" />

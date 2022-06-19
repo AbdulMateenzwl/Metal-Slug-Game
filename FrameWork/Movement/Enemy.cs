@@ -38,7 +38,7 @@ namespace FrameWork.Movement
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && location(pb, list[i].Pb) && (list[i].Otype == ENUM.ObjectTypes.floor))
+                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) &&(list[i].Otype == ENUM.ObjectTypes.floor))
                 {
                     return true;
                 }
