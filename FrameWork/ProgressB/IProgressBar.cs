@@ -11,7 +11,7 @@ namespace FrameWork.ProgressB
     public interface IProgressBar
     {
         void updateProgressBar(PictureBox pictureBox);
-        void reductionF(GameObject obj);
+        void reductionF(GameObject obj,IGame igame);
         void DeleteProgressBar(GameObject a);
 
     }

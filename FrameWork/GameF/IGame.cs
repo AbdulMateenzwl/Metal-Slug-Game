@@ -13,6 +13,6 @@ namespace FrameWork.GameF
         void RaisePlayerBulletRemove(GameObject obj);
         void AddGameObject(GameObject a);
         void RemoveGameObject(GameObject a);
-
+        void AddScore(int x);
     }
 }

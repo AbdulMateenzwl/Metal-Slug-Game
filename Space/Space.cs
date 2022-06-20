@@ -30,12 +30,15 @@ namespace Space
         private void Space_Load(object sender, EventArgs e)
         {
             boundary = new System.Drawing.Point(this.Width, this.Height);
-
+            label1.Location = new System.Drawing.Point(0,Height - 100);
             g = new Game(boundary);
-            Game.onGameObjectAdded += new EventHandler(Ongameobjectadded);
-            //ProgressBarClass.onGamobjectRemove += new EventHandler(removeGameobject);
-            ProgressBarClass.onAdd += new EventHandler(ONADDprogress);
+            g.onGameObjectAdded += new EventHandler(Ongameobjectadded);
             g.removeObject += new EventHandler(removeGameobject);
+            g.AddProgressBar += new EventHandler(ONADDprogress);
+            g.RemoveProgressBar += new EventHandler(removeProgressbar);
+            g.onPlayerHit += new EventHandler(raise);
+            g.onEnemyHit += new EventHandler(raise);
+            g.AddLable += new EventHandler(ONADDLable);
 
             //COllisions
             CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.enemy, new PlayerCollision());
@@ -45,7 +48,7 @@ namespace Space
             CollisionClass a = new CollisionClass(ObjectTypes.player, ObjectTypes.enemyfire, new EnemyBulletCollision());
             g.addCollision(a);
             //PLAYER
-            g.AddGameObject(Resources.ufoGreen, ObjectTypes.player, 200, 0, 50, 50, new Player(boundary, 10, 10, 12), new PlayerFire(boundary), new ProgressBarClass(1, Color.YellowGreen));
+            g.AddGameObject(Resources.ufoGreen, ObjectTypes.player, 200, 0, 50, 50, new Player(boundary, 10, 10, 12), new PlayerFire(boundary), new ProgressBarClass(g,5, Color.YellowGreen,3));
             g.AddGameObject(Resources.floor1, ObjectTypes.Mainfloor, Height - 50, 0, Width, Resources.ufoGreen.Height, new Floor(), new NoFire(), new NoProgressBar());
 
         }
@@ -59,13 +62,19 @@ namespace Space
             removePictureBox(a.Pb, EventArgs.Empty);
             this.Controls.Remove(a.Pb);
             g.removeGameObjectfromlist(sender as GameObject);
+            g.AddScore(50);
+        }
+        private void raise(object sender, EventArgs e)
+        {
+            GameObject obj = (sender as GameObject);
+            obj.ProgressBar.reductionF(obj,g);
         }
         private void removeProgressbar(object sender, EventArgs e)
         {
             ProgressBar progressBar = sender as ProgressBar;
             this.Controls.Remove(progressBar);
         }
-        public void removePictureBox(object sender, EventArgs e)
+        private void removePictureBox(object sender, EventArgs e)
         {
             this.Controls.Remove(sender as PictureBox);
         }
@@ -75,13 +84,18 @@ namespace Space
         {
             this.Controls.Add(sender as ProgressBar);
         }
-
+        private void ONADDLable(object sender, EventArgs e)
+        {
+            this.Controls.Add(sender as Label);
+        }
         public void Ongameobjectadded(object sender, EventArgs e)
         {
             this.Controls.Add(sender as PictureBox);
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+
+            updateScore();
             UpdateHurdles();
             g.update();
             if (Keyboard.IsKeyPressed(Key.Escape))
@@ -89,9 +103,18 @@ namespace Space
                 this.Close();
             }
         }
+        private void updateScore()
+        {
+            label1.Text = "Score :" + g.Get_Score().ToString();
+        }
+        private void updateLifes()
+        {
+            //label2.Text = "Lifes :" + g.().ToString();
+        }
         private void timer2_Tick(object sender, EventArgs e)
         {
             g.scroll();
+            g.increaseScoreTime();
             //g.RemoveUnwanted();
         }
 
@@ -170,7 +193,7 @@ namespace Space
             for (int i = 0; i < Count; i++)
             {
                 int colorx = Random(1, 5);
-                g.AddGameObject(Resources.ufoGreen, ObjectTypes.enemy, top, left, 50, 50, new Enemy(boundary, Random(5,12), 10, Random(70,120)), new EnemyFire(Random(0,30), boundary), new ProgressBarClass(colorx, colorEnemyBar(colorx)));
+                g.AddGameObject(Resources.ufoGreen, ObjectTypes.enemy, top, left, 50, 50, new Enemy(boundary, Random(5,12), 10, Random(70,120)), new EnemyFire(Random(0,30), boundary), new ProgressBarClass(g,colorx, colorEnemyBar(colorx),0));
             }
         }
         public Color colorEnemyBar(int x)

@@ -25,6 +25,7 @@ namespace FrameWork.Collision
             }
             game.RaisePlayerBulletRemove(bullet);
             game.RaisePlayerHitEvent(chr);
+            game.AddScore(10);
         }
     }
 }

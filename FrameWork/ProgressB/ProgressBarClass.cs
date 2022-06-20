@@ -11,13 +11,10 @@ namespace FrameWork.ProgressB
 {
     public class ProgressBarClass : IProgressBar
     {
-        public static event EventHandler onAdd;
-        public static event EventHandler onGamobjectRemove;
-
         private int decrement;
         private int lifes;
         CustomProgressBar pbar;
-        public ProgressBarClass(int decrement, Color color,int lifes)
+        public ProgressBarClass(Game game,int decrement, Color color,int lifes)
         {
             pbar = new CustomProgressBar();
             pbar.Maximum = 100;
@@ -26,18 +23,13 @@ namespace FrameWork.ProgressB
             pbar.ForeColor = color;
             pbar.Value = 100;
             this.decrement = decrement;
-            onAdd?.Invoke(pbar, EventArgs.Empty);
+            game.RaiseProgressbarAdd(pbar);
             this.lifes = lifes;
-            Game.onPlayerHit += new EventHandler(raise);
-            Game.onEnemyHit += new EventHandler(raise);
-        }
-        private void raise(object sender, EventArgs e)
-        {
-            GameObject obj = (sender as GameObject);
-            obj.ProgressBar.reductionF(obj);
-        }
 
-        public void reductionF(GameObject obj)
+        }
+        
+
+        public void reductionF(GameObject obj,IGame igame)
         {
             if (pbar.Value > decrement + 10)
             {
@@ -45,8 +37,31 @@ namespace FrameWork.ProgressB
             }
             else
             {
-                obj.DeleteProgressBar(obj);
-                onGamobjectRemove?.Invoke(obj, EventArgs.Empty);
+                if(lifes > 0)
+                {
+                    lifes--;
+                    /*if(lifes==2)
+                    {
+                        pbar.BackColor=Color.FromArgb(245, 22, 204);
+                        pbar.ForeColor=Color.FromArgb(245, 22, 204);
+                    }
+                    else if(lifes==1)
+                    {
+                        pbar.BackColor = Color.FromArgb(250, 50, 50);
+                        pbar.ForeColor = Color.FromArgb(250, 50, 50);
+                    }
+                    else if (lifes == 0)
+                    {
+                        pbar.BackColor = Color.FromArgb(104, 247, 214);
+                        pbar.ForeColor = Color.FromArgb(104, 247, 214);
+                    }*/
+                    pbar.Value = 100;
+                }
+                else
+                {
+                    obj.DeleteProgressBar(obj);
+                    igame.RemoveGameObject(obj);
+                }
             }
         }
 
