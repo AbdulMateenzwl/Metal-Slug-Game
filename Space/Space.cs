@@ -95,7 +95,7 @@ namespace Space
         private void timer2_Tick(object sender, EventArgs e)
         {
             g.scroll();
-            // g.RemoveUnwanted();
+            g.RemoveUnwanted();
         }
         private void floor1(int top)
         {
