@@ -11,8 +11,6 @@ namespace FrameWork.Movement
     {
         private System.Drawing.Point boundary;
         bool direction = true;
-        public EventHandler onAdd;
-        public EventHandler onDelete;
         int r_count = 0;
         int l_count = 0;
         int walking_speed;
@@ -69,41 +67,41 @@ namespace FrameWork.Movement
             }
             return false;
         }
-        public void move(PictureBox pb, List<GameObject> gameobjects)
+        public void move(GameObject obj, List<GameObject> gameobjects, IGame igame)
         {
-            gravity(pb, gameobjects);
+            gravity(obj.Pb, gameobjects);
             for (int i = 0; i < gameobjects.Count; i++)
             {
-                if (gameobjects[i].Pb.Bounds.IntersectsWith(pb.Bounds) && gameobjects[i].Otype==ENUM.ObjectTypes.floor)
+                if (gameobjects[i].Pb.Bounds.IntersectsWith(obj.Pb.Bounds) && gameobjects[i].Otype==ENUM.ObjectTypes.floor)
                 {
                     RandomDirection();
-                    if (pb.Left-walking_speed < gameobjects[i].Pb.Left)
+                    if (obj.Pb.Left-walking_speed < gameobjects[i].Pb.Left)
                     {
                         direction = true;
                     }
-                    else if (pb.Right + walking_speed > gameobjects[i].Pb.Right)
+                    else if (obj.Pb.Right + walking_speed > gameobjects[i].Pb.Right)
                     {
                         direction = false;
                     }
                     if (direction)
                     {
-                        pb.Left += walking_speed;
+                        obj.Pb.Left += walking_speed;
                         r_count++;
                         if (r_count == 7)
                         {
                             r_count = 1;
                         }
-                        updatepic_right(pb);
+                        updatepic_right(obj.Pb);
                     }
                     else
                     {
-                        pb.Left -= walking_speed;
+                        obj.Pb.Left -= walking_speed;
                         l_count++;
                         if (l_count == 7)
                         {
                             l_count = 1;
                         }
-                        updatepic_left(pb);
+                        updatepic_left(obj.Pb);
                     }
                 }
             }

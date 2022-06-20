@@ -33,13 +33,9 @@ namespace Space
 
             g = new Game(boundary);
             Game.onGameObjectAdded += new EventHandler(Ongameobjectadded);
-            ProgressBarClass.onGamobjectRemove += new EventHandler(removeGamobject);
+            //ProgressBarClass.onGamobjectRemove += new EventHandler(removeGameobject);
             ProgressBarClass.onAdd += new EventHandler(ONADDprogress);
-            Player.onAdd += new EventHandler(ONADDprogress);
-            g.onPlayerBullet += new EventHandler(removeGamobject);
-            Bullet.onEnd += new EventHandler(removePictureBox);
-            g.onEnd += new EventHandler(removeGamobject);
-
+            g.removeObject += new EventHandler(removeGameobject);
 
             //COllisions
             CollisionClass c = new CollisionClass(ObjectTypes.player, ObjectTypes.enemy, new PlayerCollision());
@@ -49,27 +45,32 @@ namespace Space
             CollisionClass a = new CollisionClass(ObjectTypes.player, ObjectTypes.enemyfire, new EnemyBulletCollision());
             g.addCollision(a);
             //PLAYER
-            Game.AddGameObject(Resources.ufoGreen, ObjectTypes.player, 200, 0, 50, 50, new Player(boundary, 10, 10, 12), new PlayerFire(boundary), new ProgressBarClass(1, Color.YellowGreen));
-            Game.AddGameObject(Resources.floor1, ObjectTypes.Mainfloor, Height - 50, 0, Width, Resources.ufoGreen.Height, new Floor(), new NoFire(), new NoProgressBar());
-
-
-
+            g.AddGameObject(Resources.ufoGreen, ObjectTypes.player, 200, 0, 50, 50, new Player(boundary, 10, 10, 12), new PlayerFire(boundary), new ProgressBarClass(1, Color.YellowGreen));
+            g.AddGameObject(Resources.floor1, ObjectTypes.Mainfloor, Height - 50, 0, Width, Resources.ufoGreen.Height, new Floor(), new NoFire(), new NoProgressBar());
 
         }
 
-        private void removeGamobject(object sender, EventArgs e)
+
+        //Remove Controls
+        private void removeGameobject(object sender, EventArgs e)
         {
             GameObject a = (sender as GameObject);
             removeProgressbar(a.ProgressBar, EventArgs.Empty);
             removePictureBox(a.Pb, EventArgs.Empty);
-            Game.removeGameobject(a);
+            this.Controls.Remove(a.Pb);
+            g.removeGameObjectfromlist(sender as GameObject);
         }
         private void removeProgressbar(object sender, EventArgs e)
         {
             ProgressBar progressBar = sender as ProgressBar;
             this.Controls.Remove(progressBar);
         }
+        public void removePictureBox(object sender, EventArgs e)
+        {
+            this.Controls.Remove(sender as PictureBox);
+        }
 
+        //Add Controls
         private void ONADDprogress(object sender, EventArgs e)
         {
             this.Controls.Add(sender as ProgressBar);
@@ -78,10 +79,6 @@ namespace Space
         public void Ongameobjectadded(object sender, EventArgs e)
         {
             this.Controls.Add(sender as PictureBox);
-        }
-        public void removePictureBox(object sender, EventArgs e)
-        {
-            this.Controls.Remove(sender as PictureBox);
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -95,35 +92,37 @@ namespace Space
         private void timer2_Tick(object sender, EventArgs e)
         {
             g.scroll();
-            g.RemoveUnwanted();
+            //g.RemoveUnwanted();
         }
+
+        //Random Movement
         private void floor1(int top)
         {
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 100, Width - 100, 10, new Floor(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, 0, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 100, Width - 100, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, 0, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
         }
         private void floor2(int top)
         {
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 100, 10, new Floor(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 100, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 100, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 100, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
         }
         private void floor3(int top)
         {
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 600, 10, new Floor(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 600, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, Width - 500, 500, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 600, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 600, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, Width - 500, 500, 10, new Floor(), new NoFire(), new NoProgressBar());
             generate_enemy(top - 10, 0);
         }
         private void floor4(int top)
         {
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 1000, 10, new Floor(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 1000, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
-            Game.AddGameObject(Resources.floor1, ObjectTypes.floor, top, Width - 900, 900, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, 0, Width - 1000, 10, new Floor(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.stairs, ObjectTypes.stairs, top, Width - 1000, 100, 150, new stairs(), new NoFire(), new NoProgressBar());
+            g.AddGameObject(Resources.floor1, ObjectTypes.floor, top, Width - 900, 900, 10, new Floor(), new NoFire(), new NoProgressBar());
             generate_enemy(top - 10, 0);
         }
         public void UpdateHurdles()
         {
-            if (Game.get_lowest_floor() >= 150)
+            if (g.get_lowest_floor() >= 150)
             {
                 generate_Random_Floors();
             }
@@ -171,7 +170,7 @@ namespace Space
             for (int i = 0; i < Count; i++)
             {
                 int colorx = Random(1, 5);
-                Game.AddGameObject(Resources.ufoGreen, ObjectTypes.enemy, top, left, 50, 50, new Enemy(boundary, Random(5,12), 10, Random(70,120)), new EnemyFire(Random(0,30), boundary), new ProgressBarClass(colorx, colorEnemyBar(colorx)));
+                g.AddGameObject(Resources.ufoGreen, ObjectTypes.enemy, top, left, 50, 50, new Enemy(boundary, Random(5,12), 10, Random(70,120)), new EnemyFire(Random(0,30), boundary), new ProgressBarClass(colorx, colorEnemyBar(colorx)));
             }
         }
         public Color colorEnemyBar(int x)

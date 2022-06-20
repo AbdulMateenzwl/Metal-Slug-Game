@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using FrameWork.GameF;
 namespace FrameWork.Movement
 {
-    public class HorizentalMove:IMovement
+    public class HorizentalMove
     {
         private int speed;
         private Point boundary;
@@ -23,7 +23,7 @@ namespace FrameWork.Movement
         public bool getDirection() { return false; }
 
 
-        public void move(PictureBox pb, List<GameObject> gameobjects)
+        public void move(GameObject pb, List<GameObject> gameobjects)
         {
            /* if((pb.Right)>=0)
             {

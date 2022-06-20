@@ -18,7 +18,7 @@ namespace FrameWork.GameF
         private Ifire ifire;
         private IProgressBar progressBar;
 
-        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m,Ifire ifire,IProgressBar ibar)
+        public GameObject(Image img, ObjectTypes otype, int top, int left, int Width, int Height, IMovement m, Ifire ifire, IProgressBar ibar)
         {
             pb = new PictureBox();
             pb.Image = img;
@@ -38,12 +38,9 @@ namespace FrameWork.GameF
         public ObjectTypes Otype { get => otype; set => otype = value; }
         public IProgressBar ProgressBar { get => progressBar; set => progressBar = value; }
 
-        public void move(List<GameObject> gameobjects)
+        public void move(List<GameObject> gameobjects,IGame igame)
         {
-           
-                Movement.move(this.pb, gameobjects);
-
-            
+            Movement.move(this, gameobjects,igame);
         }
         public void scroll()
         {
@@ -52,9 +49,9 @@ namespace FrameWork.GameF
                 Movement.scroll(this.pb);
             }
         }
-        public void fire(PictureBox pb)
+        public void fire(PictureBox pb,IGame igame)
         {
-            ifire.fire(pb,movement.getDirection());
+            ifire.fire(pb, movement.getDirection(),igame);
         }
         public void updateprogressbar()
         {
@@ -64,6 +61,6 @@ namespace FrameWork.GameF
         {
             a.ProgressBar.DeleteProgressBar(a);
         }
-        
+
     }
 }

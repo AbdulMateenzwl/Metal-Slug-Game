@@ -5,43 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using FrameWork.GameF;
 namespace FrameWork.Movement
 {
     public class Bullet : IMovement
     {
-        bool direcrion;
-        int speed;
-        Point boundary;
-        public static event EventHandler onEnd;
+        private bool direcrion;
+        private int speed;
+        private Point boundary;
         public Bullet(bool direction, int speed, Point boundary)
         {
             this.direcrion = direction;
             this.speed = speed;
             this.boundary = boundary;
         }
-        
-        public void move(PictureBox pb, List<GameF.GameObject> list)
+        public void move(GameF.GameObject obj, List<GameF.GameObject> list, IGame igame)
         {
             if (direcrion)
             {
-                if (pb.Left < boundary.X)
+                if (obj.Pb.Left < boundary.X)
                 {
-                    pb.Left += speed;
+                    obj.Pb.Left += speed;
                 }
                 else
                 {
-                    onEnd?.Invoke(this, EventArgs.Empty);
+                    igame.RemoveGameObject(obj);
                 }
             }
             else
             {
-                if (pb.Right > 0)
+                if (obj.Pb.Right> 0)
                 {
-                    pb.Left -= speed;
+                    obj.Pb.Left -= speed;
                 }
                 else
                 {
-                    onEnd?.Invoke(this, EventArgs.Empty);
+                    igame.RemoveGameObject(obj);
                 }
             }
         }
@@ -50,6 +49,5 @@ namespace FrameWork.Movement
             pb.Top += 10;
         }
         public bool getDirection() { return direcrion; }
-
     }
 }

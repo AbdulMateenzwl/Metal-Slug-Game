@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace FrameWork.NewFolder1
 {
-    public  class CustomProgressBar:ProgressBar
+    public class CustomProgressBar:ProgressBar
     {
         public CustomProgressBar()
         {

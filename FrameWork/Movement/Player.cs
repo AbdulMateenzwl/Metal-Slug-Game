@@ -12,17 +12,14 @@ namespace FrameWork.Movement
     public class Player : IMovement
     {
         private System.Drawing.Point boundary;
-        bool direction = false;
-        public static EventHandler onAdd;
-        public EventHandler onDelete;
-        int r_count = 0;
-        int l_count = 0;
-        bool key_pressed = false;
-        bool jump = false;
+        private bool direction = false;
+        private int r_count = 0;
+        private int l_count = 0;
+        private bool key_pressed = false;
+        private bool jump = false;
         private int jump_count = 0;
-        int walking_speed;
-        ProgressBar pbar = new ProgressBar();
-        int G;
+        private int walking_speed;
+        private int G;
         private int jumpSteps;
         public Player(System.Drawing.Point boundary, int walking_speed, int g, int jumpSteps)
         {
@@ -35,29 +32,29 @@ namespace FrameWork.Movement
 
         public void scroll(PictureBox pb) { }
         public bool getDirection() { return direction; }
-        public void move(PictureBox pb, List<GameObject> gameobjects)
+        public void move(GameObject obj, List<GameObject> gameobjects, IGame igame)
         {
             key_pressed = false;
             if (Keyboard.IsKeyPressed(Key.RightArrow))
             {
-                moveright(pb, gameobjects);
-                updatepic_right(pb);
+                moveright(obj.Pb, gameobjects);
+                updatepic_right(obj.Pb);
                 key_pressed = true;
             }
             if (Keyboard.IsKeyPressed(Key.LeftArrow))
             {
-                moveleft(pb, gameobjects);
-                updatepic_left(pb);
+                moveleft(obj.Pb, gameobjects);
+                updatepic_left(obj.Pb);
                 key_pressed = true;
             }
             if (Keyboard.IsKeyPressed(Key.DownArrow))
             {
-                if (!stairs_bound(pb, gameobjects))
+                if (!stairs_bound(obj.Pb, gameobjects))
                 {
-                    gravity(pb, gameobjects);
+                    gravity(obj.Pb, gameobjects);
                 }
             }
-            if (check_under(pb, gameobjects) || !stairs_bound(pb, gameobjects))
+            if (check_under(obj.Pb, gameobjects) || !stairs_bound(obj.Pb, gameobjects))
             {
                 if (Keyboard.IsKeyPressed(Key.Space))
                 {
@@ -66,19 +63,19 @@ namespace FrameWork.Movement
             }
             if (jump)
             {
-                Jump(pb);
+                Jump(obj.Pb);
                 key_pressed = true;
             }
             if (!jump)
             {
-                if (stairs_bound(pb, gameobjects))
+                if (stairs_bound(obj.Pb, gameobjects))
                 {
-                    gravity(pb, gameobjects);
+                    gravity(obj.Pb, gameobjects);
                 }
             }
             if (!key_pressed)
             {
-                is_standing(pb);
+                is_standing(obj.Pb);
             }
             
 
@@ -93,49 +90,6 @@ namespace FrameWork.Movement
                 }
             }
             return true;
-        }
-        public bool inside_stairs(PictureBox pb, List<GameObject> list)
-        {
-            return true;
-        }
-        protected bool check_hurdles_left(PictureBox pb, List<GameObject> list)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && list[i].Otype == ENUM.ObjectTypes.floor && chkleft(pb, list[i].Pb))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        protected bool check_hurdles_right(PictureBox pb, List<GameObject> list)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].Pb.Bounds.IntersectsWith(pb.Bounds) && list[i].Otype == ENUM.ObjectTypes.floor && chkright(pb, list[i].Pb))
-                {
-                    return false;
-                }
-            }
-            return true;
-
-        }
-        public bool chkright(PictureBox player, PictureBox floor)
-        {
-            if (player.Top < floor.Top && player.Bottom > floor.Bottom && player.Left < floor.Left)
-            {
-                return true;
-            }
-            return false;
-        }
-        public bool chkleft(PictureBox player, PictureBox floor)
-        {
-            if (player.Top < floor.Top && player.Bottom > floor.Bottom && player.Left > floor.Left)
-            {
-                return true;
-            }
-            return false;
         }
         public void moveright(PictureBox pb, List<GameObject> gameobjects)
         {

@@ -6,21 +6,23 @@ using System.Threading.Tasks;
 using FrameWork.GameF;
 using FrameWork.Movement;
 using FrameWork.ProgressB;
+using FrameWork.ENUM;
 using System.Windows.Forms;
 using EZInput;
 namespace FrameWork.Fire
 {
     public class PlayerFire : Ifire
     {
-        int fire_count = 0;
-        bool fire_ = false;
+        private int fire_count = 0;
+        private bool fire_ = false;
         System.Drawing.Point boundary;
         public PlayerFire(System.Drawing.Point point)
         {
             boundary = point;
         }
-        public void fire(PictureBox pb, bool direction)
+        public void fire(PictureBox pb, bool direction,IGame igame)
         {
+            
             fire_ = false;
             if (Keyboard.IsKeyPressed(Key.W))
             {
@@ -29,11 +31,13 @@ namespace FrameWork.Fire
                 {
                     if (direction)
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireright1, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 15, 15, new Bullet(true, 20, boundary), new NoFire(),new NoProgressBar());
+                        GameObject a = new GameObject(Properties.Resource1.playerfireright1, ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Right, 15, 15, new Bullet(true, 20, boundary), new NoFire(), new NoProgressBar());
+                        igame.AddGameObject(a);
                     }
                     else
                     {
-                        Game.AddGameObject(FrameWork.Properties.Resource1.playerfireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 15, 15, new Bullet(false, 20, boundary), new NoFire(),new NoProgressBar());
+                        GameObject a= new GameObject(FrameWork.Properties.Resource1.playerfireleft, ENUM.ObjectTypes.playerfire, pb.Top + (pb.Height / 2) - 12, pb.Left - 10, 15, 15, new Bullet(false, 20, boundary), new NoFire(),new NoProgressBar());
+                        igame.AddGameObject(a);
                     }
                 }
             }

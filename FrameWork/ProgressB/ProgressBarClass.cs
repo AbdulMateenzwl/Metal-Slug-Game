@@ -14,11 +14,11 @@ namespace FrameWork.ProgressB
         public static event EventHandler onAdd;
         public static event EventHandler onGamobjectRemove;
 
-        public int decrement;
+        private int decrement;
+        private int lifes;
         CustomProgressBar pbar;
-        public ProgressBarClass(int decrement, Color color)
+        public ProgressBarClass(int decrement, Color color,int lifes)
         {
-            //Game.ondecrement += new EventHandler(raise);
             pbar = new CustomProgressBar();
             pbar.Maximum = 100;
             pbar.Minimum = 0;
@@ -27,6 +27,7 @@ namespace FrameWork.ProgressB
             pbar.Value = 100;
             this.decrement = decrement;
             onAdd?.Invoke(pbar, EventArgs.Empty);
+            this.lifes = lifes;
             Game.onPlayerHit += new EventHandler(raise);
             Game.onEnemyHit += new EventHandler(raise);
         }

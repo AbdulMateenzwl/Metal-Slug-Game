@@ -11,7 +11,7 @@ namespace FrameWork.Movement
 {
     public interface IMovement
     {
-        void move(PictureBox pb, List<GameObject> gameobjects);
+        void move(GameObject obj, List<GameObject> gameobjects,IGame igame);
         void scroll(PictureBox p);
         bool getDirection();
     }

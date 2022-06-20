@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrameWork.Movement;
 using FrameWork.ENUM;
+using FrameWork.Fire;
 using FrameWork.ProgressB;
 using FrameWork.Collision;
 namespace FrameWork.GameF
@@ -14,7 +15,7 @@ namespace FrameWork.GameF
     public class Game:IGame
     {
         private static Point boundary;
-        private static List<GameObject> gameobjects;
+        private List<GameObject> Gameobjects;
         private List<CollisionClass> collisions;
         public Game(Point boundary)
         {
@@ -22,30 +23,41 @@ namespace FrameWork.GameF
             Gameobjects = new List<GameObject>();
             collisions = new List<CollisionClass>();
         }
-        public static List<GameObject> Gameobjects { get => gameobjects; set => gameobjects = value; }
+        //public static List<GameObject> Gameobjects { get => gameobjects; set => gameobjects = value; }x
         public Point Boundary { get => boundary; set => boundary = value; }
 
         public static event EventHandler onGameObjectAdded;
         public static event EventHandler onPlayerHit;
         public static event EventHandler onEnemyHit;
-        public event EventHandler onPlayerBullet;
-        public event EventHandler onEnd;
-        //public static event EventHandler ondecrement;
- 
-        public static void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire,IProgressBar ibar)
+        public event EventHandler removeObject;//remove from controls
+        public void RemoveGameObject(GameObject a)
+        {
+            removeObject?.Invoke(a, EventArgs.Empty);
+        }
+
+        public void AddGameObject(Image img,ObjectTypes otype, int top,int left,int width,int height,IMovement movement,Ifire ifire,IProgressBar ibar)
         {
             GameObject ob = new GameObject(img,otype,top,left,width,height,movement,ifire,ibar);
             Gameobjects.Add(ob);
             onGameObjectAdded?.Invoke(ob.Pb, EventArgs.Empty);
         }
+        public void AddGameObject(GameObject a)
+        {
+            Gameobjects.Add(a);
+            onGameObjectAdded?.Invoke(a.Pb, EventArgs.Empty);
+        }
         public void update()
         {
             detectCollision();
-            fire();
+            fire(this);
             update_progressbar();
+            move(this);
+        }
+        public void move(IGame igame)
+        {
             for (int i = 0; i < Gameobjects.Count; i++)
             {
-                Gameobjects[i].move(Gameobjects);
+                Gameobjects[i].move(Gameobjects,igame);
             }
         }
         public void scroll()
@@ -55,11 +67,11 @@ namespace FrameWork.GameF
                 Gameobjects[i].scroll();
             }
         }
-        public void fire()
+        public void fire(IGame igame)
         {
             for (int i = 0; i < Gameobjects.Count; i++)
             {
-                Gameobjects[i].fire(Gameobjects[i].Pb);
+                Gameobjects[i].fire(Gameobjects[i].Pb,igame);
             }
         }
         public void update_progressbar()
@@ -79,8 +91,9 @@ namespace FrameWork.GameF
         }
         public void RaisePlayerBulletRemove(GameObject obj)
         {
-            onPlayerBullet?.Invoke(obj, EventArgs.Empty);
+            removeObject?.Invoke(obj, EventArgs.Empty);
         }
+       
         public void detectCollision()
         {
             for (int i = Gameobjects.Count-1; i >= 0; i--)
@@ -104,11 +117,7 @@ namespace FrameWork.GameF
         {
             collisions.Add(c);
         }
-        public static void removeGameobject(GameObject a)
-        {
-            Gameobjects.Remove(a);
-        }
-        public static int get_lowest_floor()
+        public int get_lowest_floor()
         { 
             int low = 1200;
             for (int i = 0; i < Gameobjects.Count; i++)
@@ -126,10 +135,14 @@ namespace FrameWork.GameF
             {
                 if (Gameobjects[i].Pb.Top>boundary.X)
                 {
-                    onPlayerBullet?.Invoke(Gameobjects[i], EventArgs.Empty);
+                    removeObject?.Invoke(Gameobjects[i], EventArgs.Empty);
                     Gameobjects.RemoveAt(i);
                 }
             }
+        }
+        public void removeGameObjectfromlist(GameObject a)
+        {
+            Gameobjects.Remove(a);
         }
     }
 
